@@ -1,12 +1,50 @@
-Agriculture NLP Question Answering and Summarization
+\# 🌱 Agriculture NLP — Question Answering \& Summarization
 
 
 
-Overview
+<p align="center">
+
+&#x20; <img src="assets/banner.png" alt="Agriculture NLP banner" width="100%">
+
+</p>
 
 
 
-This project implements an NLP system for working with a collection of agriculture-related e-books from Project Gutenberg.
+<p align="center">
+
+&#x20; <strong>NLP-based question answering and topic summarization for agricultural books.</strong>
+
+</p>
+
+
+
+<p align="center">
+
+&#x20; <img src="https://img.shields.io/badge/Python-3.x-blue?logo=python" alt="Python">
+
+&#x20; <img src="https://img.shields.io/badge/PyTorch-CPU-orange?logo=pytorch" alt="PyTorch">
+
+&#x20; <img src="https://img.shields.io/badge/Transformers-Hugging%20Face-yellow?logo=huggingface" alt="Transformers">
+
+&#x20; <img src="https://img.shields.io/badge/DPR-Dense%20Retrieval-purple" alt="DPR">
+
+&#x20; <img src="https://img.shields.io/badge/FAISS-Vector%20Search-green" alt="FAISS">
+
+&#x20; <img src="https://img.shields.io/badge/Streamlit-App-red?logo=streamlit" alt="Streamlit">
+
+</p>
+
+
+
+\---
+
+
+
+\## 📌 Overview
+
+
+
+This project implements a natural language processing system for \*\*question answering and topic summarization\*\* over a collection of agriculture-related e-books from Project Gutenberg.
 
 
 
@@ -14,333 +52,651 @@ The system combines:
 
 
 
-Dense Passage Retrieval (DPR) for semantic passage retrieval
+\- \*\*Dense Passage Retrieval (DPR)\*\* for semantic retrieval
 
+\- \*\*FAISS\*\* for vector similarity search
 
+\- \*\*BERT-QA\*\* for extractive question answering
 
-BERT-based extractive Question Answering
+\- \*\*T5-small\*\* for abstractive summarization
 
+\- \*\*Streamlit\*\* for the interactive web application
 
 
-T5-based abstractive summarization
 
+The project was developed as a practical implementation of a retrieval-based NLP pipeline using pretrained transformer models.
 
 
-FAISS for efficient vector similarity search
 
+\---
 
 
-Streamlit for the user interface
 
+\## ✨ Features
 
 
-The project provides two main functions:
 
+| Feature | Description |
 
+|---|---|
 
-Question Answering
+| 🔎 Semantic Retrieval | DPR retrieves passages based on semantic similarity |
 
+| 📚 Multi-book Search | Searches across six agriculture e-books |
 
+| ❓ Question Answering | BERT extracts answers directly from retrieved passages |
 
-Topic Summarization
+| 📝 Topic Summarization | T5 generates concise summaries of retrieved content |
 
+| 🗂️ Vector Search | FAISS provides efficient similarity search |
 
+| 🌐 Interactive UI | Streamlit provides a simple browser-based interface |
 
-Dataset
+| 📖 Source Display | Retrieved passages and source books are shown to the user |
 
 
 
-The system uses six unique agriculture books from Project Gutenberg:
+\---
 
 
 
-Agriculture for Beginners — Charles William Burkett, Frank Lincoln Stevens, and Daniel Harvey Hill
+\## 🏗️ System Architecture
 
 
 
-Science and Practice in Farm Cultivation — James Buckman
+<p align="center">
 
+&#x20; <img src="assets/system\_architecture.png" alt="Agriculture NLP system architecture" width="100%">
 
+</p>
 
-The Farm That Won't Wear Out — Cyril G. Hopkins
 
 
+\### Pipeline
 
-Dry-Farming: A System of Agriculture for Countries under a Low Rainfall — John Andreas Widtsoe
 
 
+```text
 
-Pleasant Talk About Fruits, Flowers and Farming — Henry Ward Beecher
+Agricultural Books
 
+&#x20;      │
 
+&#x20;      ▼
 
-Field, Forest and Farm — Jean-Henri Fabre
+Preprocessing \& Cleaning
 
+&#x20;      │
 
+&#x20;      ▼
 
-One of the original assignment links was duplicated, so six unique books were processed.
+Passage Creation
 
+(200 words, 50-word overlap)
 
+&#x20;      │
 
-Preprocessing
+&#x20;      ▼
 
+DPR Context Encoder
 
+&#x20;      │
 
-The Project Gutenberg texts are cleaned before being used by the NLP models.
+&#x20;      ▼
 
+FAISS Vector Index
 
+&#x20;      │
 
-The preprocessing includes:
+&#x20;      │  Query
 
+&#x20;      ▼
 
+DPR Question Encoder
 
-Removing Project Gutenberg header and footer markers
+&#x20;      │
 
+&#x20;      ▼
 
+Top-k Relevant Passages
 
-Removing production and transcription notes
+&#x20;      │
 
+&#x20;      ├──────────────────────────┐
 
+&#x20;      │                          │
 
-Removing formatting artifacts
+&#x20;      ▼                          ▼
 
+&#x20;  BERT-QA                    T5-small
 
+&#x20;  Extractive                Abstractive
 
-Normalizing whitespace
+&#x20;  Answering                 Summarization
 
+&#x20;      │                          │
 
+&#x20;      ▼                          ▼
 
-Preserving the actual book content
+&#x20;    Answer                    Summary
 
+&#x20;      │                          │
 
+&#x20;      └──────────┬───────────────┘
 
-The cleaned books are then divided into overlapping passages.
+&#x20;                 ▼
 
+&#x20;         Streamlit Web App
 
+```
 
-Each passage contains approximately 200 words with an overlap of 50 words between consecutive passages.
 
 
+\---
 
-The final dataset contains approximately 2,973 passages.
 
 
+\## 📚 Dataset
 
-System Architecture
 
 
+The system uses \*\*six unique agriculture books\*\* from Project Gutenberg:
 
-Agriculture E-books
 
-&#x20;       |
 
-&#x20;       v
+1\. \*\*Agriculture for Beginners\*\*  
 
-&#x20;  Preprocessing
+&#x20;  Charles William Burkett, Frank Lincoln Stevens, and Daniel Harvey Hill
 
-&#x20;       |
 
-&#x20;       v
 
-&#x20; Passage Creation
+2\. \*\*Science and Practice in Farm Cultivation\*\*  
 
-&#x20;       |
+&#x20;  James Buckman
 
-&#x20;       v
 
-&#x20;  DPR Context Encoder
 
-&#x20;       |
+3\. \*\*The Farm That Won't Wear Out\*\*  
 
-&#x20;       v
+&#x20;  Cyril G. Hopkins
 
-&#x20;     FAISS
 
-&#x20;  Vector Database
 
-&#x20;       |
+4\. \*\*Dry-Farming: A System of Agriculture for Countries under a Low Rainfall\*\*  
 
-&#x20;       +----------------------+
+&#x20;  John Andreas Widtsoe
 
-&#x20;       |                      |
 
-&#x20;       v                      v
 
-&#x20;Question Answering      Topic Summarization
+5\. \*\*Pleasant Talk About Fruits, Flowers and Farming\*\*  
 
-&#x20;       |                      |
+&#x20;  Henry Ward Beecher
 
-&#x20;       v                      v
 
-&#x20;   DPR Retrieval          DPR Retrieval
 
-&#x20;       |                      |
+6\. \*\*Field, Forest and Farm\*\*  
 
-&#x20;       v                      v
+&#x20;  Jean-Henri Fabre
 
-&#x20;   BERT-QA                T5-small
 
-&#x20;       |                      |
 
-&#x20;       v                      v
+One of the original assignment links was duplicated, resulting in six unique books.
 
-&#x20;Extractive Answer       Topic Summary
 
 
+\### Dataset processing
 
-Question Answering
 
 
+The original Project Gutenberg texts are:
 
-For Question Answering, the system follows these steps:
 
 
+\- cleaned
 
-The user enters a question.
+\- normalized
 
+\- divided into overlapping passages
 
+\- converted into DPR embeddings
 
-DPR converts the question into a dense vector representation.
 
 
+The final dataset contains approximately \*\*2,973 passages\*\*.
 
-FAISS retrieves the most relevant passages.
 
 
+Each passage contains approximately \*\*200 words\*\*, with a \*\*50-word overlap\*\* between consecutive passages.
 
-The retrieved passages are given to a BERT-based Question Answering model.
 
 
+\---
 
-BERT-QA extracts an answer span directly from the retrieved passage.
 
 
+\## 🧹 Preprocessing
 
-The system displays the answer and its source passage.
 
 
+The preprocessing pipeline removes common Project Gutenberg formatting and metadata while preserving the actual book content.
 
-Models
 
 
+Main steps include:
 
-DPR:
 
 
+1\. Remove Project Gutenberg start/end markers
+
+2\. Remove production and transcription notes
+
+3\. Remove formatting artifacts
+
+4\. Normalize whitespace
+
+5\. Preserve the book text
+
+6\. Split the cleaned text into overlapping passages
+
+
+
+Implementation:
+
+
+
+```text
+
+src/preprocess.py
+
+src/chunk\_books.py
+
+```
+
+
+
+\---
+
+
+
+\## 🔎 Dense Passage Retrieval
+
+
+
+The project uses \*\*Dense Passage Retrieval (DPR)\*\* to retrieve passages relevant to a user's question or topic.
+
+
+
+Two DPR encoders are used:
+
+
+
+```text
 
 facebook/dpr-question\_encoder-single-nq-base
 
 facebook/dpr-ctx\_encoder-single-nq-base
 
+```
 
 
-Question Answering:
+
+The passage encoder converts each passage into a \*\*768-dimensional dense vector\*\*.
 
 
+
+The question encoder converts the user's query into the same vector space.
+
+
+
+FAISS then searches the passage vectors using normalized inner-product similarity, which corresponds to cosine similarity.
+
+
+
+\### Retrieval flow
+
+
+
+```text
+
+User Question / Topic
+
+&#x20;       │
+
+&#x20;       ▼
+
+DPR Question Encoder
+
+&#x20;       │
+
+&#x20;       ▼
+
+Question Embedding
+
+&#x20;       │
+
+&#x20;       ▼
+
+FAISS Similarity Search
+
+&#x20;       │
+
+&#x20;       ▼
+
+Top-k Relevant Passages
+
+```
+
+
+
+The generated index is stored in:
+
+
+
+```text
+
+data/dpr\_passages.faiss
+
+```
+
+
+
+Passage metadata is stored in:
+
+
+
+```text
+
+data/dpr\_metadata.pkl
+
+```
+
+
+
+\---
+
+
+
+\## ❓ Question Answering
+
+
+
+The Question Answering pipeline combines DPR with a pretrained BERT-based extractive QA model.
+
+
+
+Model:
+
+
+
+```text
 
 deepset/bert-base-cased-squad2
 
-
-
-Topic Summarization
-
-
-
-For topic summarization:
+```
 
 
 
-The user enters a topic.
+\### Process
 
 
 
-DPR retrieves the most relevant passages.
+1\. User enters a question.
+
+2\. DPR retrieves the most relevant passages.
+
+3\. Each retrieved passage is provided as context to BERT-QA.
+
+4\. BERT predicts the start and end positions of an answer span.
+
+5\. The highest-scoring extracted answer is displayed.
+
+6\. The source passage and book are shown in the application.
 
 
 
-T5 generates a summary for each retrieved passage.
+\### Example
 
 
 
-The generated passage summaries are combined.
+\*\*Question\*\*
 
 
 
-T5 processes the combined summaries again to produce a final topic-focused summary.
-
-
-
-Model
-
-
-
-t5-small
-
-
-
-Vector Search
-
-
-
-The DPR passage embeddings have 768 dimensions.
-
-
-
-FAISS is used with an inner-product index after L2 normalization. This makes the similarity measure equivalent to cosine similarity.
-
-
-
-The final FAISS index contains 2,973 passage vectors.
-
-
-
-Streamlit Application
-
-
-
-The application provides two modes:
-
-
-
-Question Answering
-
-
-
-Users can enter questions such as:
-
-
+```text
 
 How can soil fertility be maintained?
 
-
-
-The system retrieves relevant agriculture passages and extracts an answer using BERT-QA.
-
-
-
-Topic Summarization
+```
 
 
 
-Users can enter topics such as:
+The system retrieves relevant passages and extracts an answer such as:
 
 
 
-soil fertility and how farmers can maintain fertile soil
+```text
+
+by arranging a system of rotation and growing each year a crop
+
+that is not injured by the excreta of the preceding crop
+
+```
 
 
 
-The system retrieves relevant passages and generates a topic-focused summary using T5.
+The answer is extracted directly from the retrieved source text.
 
 
 
-Project Structure
+\---
 
 
+
+\## 📝 Topic Summarization
+
+
+
+The summarization pipeline combines DPR retrieval with \*\*T5-small\*\*.
+
+
+
+Model:
+
+
+
+```text
+
+t5-small
+
+```
+
+
+
+\### Process
+
+
+
+```text
+
+Topic
+
+&#x20; │
+
+&#x20; ▼
+
+DPR Retrieval
+
+&#x20; │
+
+&#x20; ▼
+
+Top Relevant Passages
+
+&#x20; │
+
+&#x20; ▼
+
+T5 Summary for Each Passage
+
+&#x20; │
+
+&#x20; ▼
+
+Combined Summaries
+
+&#x20; │
+
+&#x20; ▼
+
+T5 Final Topic Summary
+
+```
+
+
+
+The implementation uses a two-pass summarization approach:
+
+
+
+1\. Generate a summary for each retrieved passage.
+
+2\. Combine the generated summaries.
+
+3\. Generate a final topic-focused summary.
+
+
+
+This provides a practical demonstration of retrieval followed by abstractive summarization.
+
+
+
+\---
+
+
+
+\## 🖥️ Application Screenshots
+
+
+
+> \*\*Add your actual Streamlit screenshots here.\*\*
+
+
+
+\### Question Answering
+
+
+
+Place your screenshot at:
+
+
+
+```text
+
+assets/screenshots/question\_answering.png
+
+```
+
+
+
+Then uncomment the image below:
+
+
+
+```markdown
+
+!\[Question Answering](assets/screenshots/question\_answering.png)
+
+```
+
+
+
+\### Topic Summarization
+
+
+
+Place your screenshot at:
+
+
+
+```text
+
+assets/screenshots/topic\_summarization.png
+
+```
+
+
+
+Then uncomment:
+
+
+
+```markdown
+
+!\[Topic Summarization](assets/screenshots/topic\_summarization.png)
+
+```
+
+
+
+\---
+
+
+
+\## 🛠️ Technologies
+
+
+
+| Technology | Purpose |
+
+|---|---|
+
+| Python | Main programming language |
+
+| PyTorch | Deep learning framework |
+
+| Hugging Face Transformers | Transformer models |
+
+| DPR | Dense passage retrieval |
+
+| BERT | Extractive question answering |
+
+| T5 | Abstractive summarization |
+
+| FAISS | Vector similarity search |
+
+| Streamlit | Web application |
+
+| NumPy | Numerical processing |
+
+
+
+\---
+
+
+
+\## 📁 Project Structure
+
+
+
+```text
 
 agriculture-nlp-qa-summarization/
 
-|
+│
+
+├── assets/
+
+│   ├── banner.png
+
+│   ├── system\_architecture.png
+
+│   └── screenshots/
+
+│       ├── question\_answering.png
+
+│       └── topic\_summarization.png
+
+│
 
 ├── data/
 
@@ -354,69 +710,113 @@ agriculture-nlp-qa-summarization/
 
 │   └── dpr\_metadata.pkl
 
-|
+│
 
 ├── models/
 
-|
+│
 
 ├── notebooks/
 
-|
+│
 
 ├── src/
 
-│   ├── preprocess.py
+│   ├── app.py
 
 │   ├── chunk\_books.py
 
 │   ├── dpr\_retriever.py
 
-│   ├── test\_dpr.py
-
-│   ├── test\_bert\_qa.py
+│   ├── preprocess.py
 
 │   ├── qa\_system.py
 
-│   ├── test\_summarization.py
-
 │   ├── summarization\_system.py
 
-│   └── app.py
+│   ├── test\_bert\_qa.py
 
-|
+│   ├── test\_dpr.py
+
+│   └── test\_summarization.py
+
+│
+
+├── .gitignore
+
+├── README.md
 
 ├── requirements.txt
 
-├── requirements-freeze.txt
+└── requirements-freeze.txt
 
-└── README.md
-
-
-
-Installation
+```
 
 
 
-Create and activate a virtual environment:
+\---
 
 
+
+\## ⚙️ Installation
+
+
+
+Clone the repository:
+
+
+
+```powershell
+
+git clone https://github.com/chalithalumbini/agriculture-nlp-qa-summarization.git
+
+cd agriculture-nlp-qa-summarization
+
+```
+
+
+
+Create a virtual environment:
+
+
+
+```powershell
 
 python -m venv .venv
 
+```
+
+
+
+Activate it on Windows PowerShell:
+
+
+
+```powershell
+
 .\\.venv\\Scripts\\Activate.ps1
 
+```
 
 
-Install the dependencies:
+
+Install dependencies:
 
 
+
+```powershell
 
 pip install -r requirements.txt
 
+```
 
 
-Running the Application
+
+\---
+
+
+
+\## ▶️ Run the Application
 
 
 
@@ -424,177 +824,199 @@ From the project root:
 
 
 
+```powershell
+
 streamlit run src\\app.py
 
+```
 
 
-The application will open in a browser.
 
+Then open the local URL shown by Streamlit, for example:
 
 
-Main Components
 
+```text
 
+http://localhost:8501
 
-preprocess.py
+```
 
 
 
-Cleans the original Project Gutenberg texts.
+\---
 
 
 
-chunk\_books.py
+\## 🧪 Testing Individual Components
 
 
 
-Divides the processed books into overlapping passages.
+\### Test DPR retrieval
 
 
 
-dpr\_retriever.py
+```powershell
 
+python src\\test\_dpr.py
 
+```
 
-Creates DPR embeddings for the passages and builds the FAISS index.
 
 
+\### Test BERT Question Answering
 
-test\_dpr.py
 
 
+```powershell
 
-Tests DPR retrieval independently.
+python src\\test\_bert\_qa.py
 
+```
 
 
-test\_bert\_qa.py
 
+\### Test T5 summarization
 
 
-Tests the BERT Question Answering model independently.
 
+```powershell
 
+python src\\test\_summarization.py
 
-qa\_system.py
+```
 
 
 
-Combines DPR retrieval with BERT-based extractive Question Answering.
+\---
 
 
 
-test\_summarization.py
+\## 📊 Current System
 
 
 
-Tests T5 summarization independently.
+| Component | Implementation |
 
+|---|---|
 
+| Books | 6 agriculture e-books |
 
-summarization\_system.py
+| Passages | 2,973 |
 
+| Passage size | \~200 words |
 
+| Passage overlap | 50 words |
 
-Combines DPR retrieval with T5-based topic summarization.
+| DPR embedding size | 768 |
 
+| Vector database | FAISS |
 
+| Question Answering | BERT extractive QA |
 
-app.py
+| Summarization | T5-small |
 
+| Interface | Streamlit |
 
+| Runtime | CPU-compatible |
 
-Provides the complete Streamlit interface.
 
 
+\---
 
-Example
 
 
+\## ⚠️ Limitations
 
-Question
 
 
+\- The system uses pretrained models rather than models specifically fine-tuned on the agriculture books.
 
-How can soil fertility be maintained?
+\- BERT-QA is extractive and therefore selects answers from retrieved text.
 
+\- T5-small may produce simplified or incomplete summaries for complex passages.
 
+\- Retrieval quality depends on the DPR model and passage segmentation.
 
-The system retrieves relevant passages and uses BERT-QA to extract an answer from the retrieved text.
+\- The current project does not include a formal benchmark evaluation against a manually labelled QA or summarization dataset.
 
 
 
-Topic
+These limitations are important when interpreting the generated answers and summaries.
 
 
 
-soil fertility and how farmers can maintain fertile soil
+\---
 
 
 
-DPR retrieves relevant passages and T5 generates a topic-focused summary.
+\## 🎯 Project Objective
 
 
 
-Limitations
+The main objective is to demonstrate an end-to-end NLP pipeline that combines:
 
 
 
-The system uses pretrained models rather than models trained specifically on the agriculture books.
+```text
 
+Information Retrieval
 
+&#x20;       +
 
-T5-small can produce incomplete or simplified summaries for longer or complex passages.
+Transformer-based NLP
 
+&#x20;       +
 
+Question Answering
 
-BERT-QA performs extractive Question Answering, so answers must come from the retrieved text.
+&#x20;       +
 
+Abstractive Summarization
 
+&#x20;       +
 
-Retrieval quality depends on the DPR model and the passage segmentation.
+Interactive Web Application
 
+```
 
 
-No formal benchmark accuracy evaluation has been performed yet.
 
+The project demonstrates how large collections of domain-specific text can be transformed into an interactive system for retrieving, answering questions from, and summarizing agricultural knowledge.
 
 
-Technologies
 
+\---
 
 
-Python
 
+\## 👤 Author
 
 
-PyTorch
 
+\*\*Chalitha Lumbini\*\*
 
 
-Hugging Face Transformers
 
+MSc Statistical Data Analytics  
 
+Tampere University, Finland
 
-Dense Passage Retrieval (DPR)
 
 
+\---
 
-BERT
 
 
+\## 📄 License
 
-T5
 
 
+This project is intended for educational and research purposes.
 
-FAISS
 
 
+The agriculture texts are sourced from Project Gutenberg and remain subject to their respective public-domain and usage terms.
 
-Streamlit
 
-
-
-NumPy
 
